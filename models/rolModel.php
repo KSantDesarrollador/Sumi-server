@@ -21,9 +21,9 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
 // Inserta registros a la base de datos
 if ($_POST['METHOD']=='POST') {
     unset($_POST['METHOD']);
-    $nomRol = $_POST['nomRol'];
+    $nomRol = $_POST['RrlNomRol'];
     $query = "INSERT INTO ksvmrol02(RrlNomRol) VALUES('$nomRol')";
-    $idAutoincrement = "SELECT MAX(RrlId) AS id FROM ksvmrol02";
+    $idAutoincrement = "SELECT MAX(RrlId) AS RrlId, RrlNomRol, RrlEstRol FROM ksvmrol02";
     $res = methodPost($query, $idAutoincrement);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
@@ -34,8 +34,9 @@ if ($_POST['METHOD']=='POST') {
 if ($_POST['METHOD']=='PUT') {
     unset($_POST['METHOD']);
     $id = $_GET['id'];
-    $nomRol = $_POST['nomRol'];
-    $query = "UPDATE ksvmrol02 SET RrlNomRol = '$nomRol' WHERE RrlId = '$id'";
+    $nomRol = $_POST['RrlNomRol'];
+    $estRol = $_POST['RrlEstRol'];
+    $query = "UPDATE ksvmrol02 SET RrlNomRol = '$nomRol', RrlEstRol = '$estRol' WHERE RrlId = '$id'";
     $res = methodPut($query);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
