@@ -6,11 +6,11 @@ header('Access-Control-Allow-Origin: *');
 // Consulta a la base de datos para traer los datos
 if ($_SERVER['REQUEST_METHOD']=='GET') {
     if (isset($_GET['id'])) {
-        $query = "SELECT * FROM ksvmrol02 WHERE RrlId=".$_GET['id'];
+        $query = "SELECT * FROM sumi_rol21 WHERE RrlId=".$_GET['id'];
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
     } else {
-        $query = "SELECT * FROM ksvmrol02";
+        $query = "SELECT * FROM sumi_rol21";
         $res = methodGet($query);
         echo json_encode($res->fetchAll());
     }
@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
 if ($_POST['METHOD']=='POST') {
     unset($_POST['METHOD']);
     $nomRol = $_POST['RrlNomRol'];
-    $query = "INSERT INTO ksvmrol02(RrlNomRol) VALUES('$nomRol')";
-    $idAutoincrement = "SELECT MAX(RrlId) AS RrlId, RrlNomRol, RrlEstRol FROM ksvmrol02";
+    $query = "INSERT INTO sumi_rol21(RrlNomRol) VALUES('$nomRol')";
+    $idAutoincrement = "SELECT MAX(RrlId) AS RrlId, RrlNomRol, RrlEstRol FROM sumi_rol21";
     $res = methodPost($query, $idAutoincrement);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
@@ -36,7 +36,7 @@ if ($_POST['METHOD']=='PUT') {
     $id = $_GET['id'];
     $nomRol = $_POST['RrlNomRol'];
     $estRol = $_POST['RrlEstRol'];
-    $query = "UPDATE ksvmrol02 SET RrlNomRol = '$nomRol', RrlEstRol = '$estRol' WHERE RrlId = '$id'";
+    $query = "UPDATE sumi_rol21 SET RrlNomRol = '$nomRol', RrlEstRol = '$estRol' WHERE RrlId = '$id'";
     $res = methodPut($query);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
@@ -47,7 +47,7 @@ if ($_POST['METHOD']=='PUT') {
 if ($_POST['METHOD']=='DELETE') {
     unset($_POST['METHOD']);
     $id = $_GET['id'];
-    $query = "DELETE FROM ksvmrol02 WHERE RrlId = '$id'";
+    $query = "DELETE FROM sumi_rol21 WHERE RrlId = '$id'";
     $res = methodDelete($query);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");

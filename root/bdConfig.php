@@ -1,7 +1,7 @@
 <?php
 $pdo = null;
 $host = "localhost";
-$bd = "db_ksvmsigimvak";
+$bd = "softvak_sumi_db";
 $user = "root";
 $password = "";
 
