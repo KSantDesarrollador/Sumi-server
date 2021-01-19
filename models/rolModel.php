@@ -2,6 +2,7 @@
 require "../root/master.php";
 
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: x-API-KEY, Origin, Authorization,X-Request-With, Content-Type, Accept, Access-Control-Request-Method');
 
 // Consulta a la base de datos para traer los datos
 if ($_SERVER['REQUEST_METHOD']=='GET') {
@@ -21,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
 // Inserta registros a la base de datos
 if ($_POST['METHOD']=='POST') {
     unset($_POST['METHOD']);
-    $nomRol = $_POST['RrlNomRol'];
-    $query = "INSERT INTO sumi_rol21(RrlNomRol) VALUES('$nomRol')";
-    $idAutoincrement = "SELECT MAX(RrlId) AS RrlId, RrlNomRol, RrlEstRol FROM sumi_rol21";
+    $RrlNomRol = __ChainFilter($_POST['RrlNomRol']);
+    $query = "INSERT INTO sumi_rol21(RrlNomRol) VALUES('$RrlNomRol')";
+    $idAutoincrement = "SELECT *, MAX(RrlId) AS RrlId FROM sumi_rol21";
     $res = methodPost($query, $idAutoincrement);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
@@ -34,9 +35,9 @@ if ($_POST['METHOD']=='POST') {
 if ($_POST['METHOD']=='PUT') {
     unset($_POST['METHOD']);
     $id = $_GET['id'];
-    $nomRol = $_POST['RrlNomRol'];
-    $estRol = $_POST['RrlEstRol'];
-    $query = "UPDATE sumi_rol21 SET RrlNomRol = '$nomRol', RrlEstRol = '$estRol' WHERE RrlId = '$id'";
+    $RrlNomRol = __ChainFilter($_POST['RrlNomRol']);
+    $RrlEstRol = __ChainFilter($_POST['RrlEstRol']);
+    $query = "UPDATE sumi_rol21 SET RrlNomRol = '$RrlNomRol', RrlEstRol = '$RrlEstRol' WHERE RrlId = '$id'";
     $res = methodPut($query);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
