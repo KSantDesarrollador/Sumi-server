@@ -6,20 +6,23 @@ header('Access-Control-Allow-Headers: x-API-KEY, Origin, Authorization,X-Request
 
 // Consulta a la base de datos para traer los datos
 if ($_SERVER['REQUEST_METHOD']=='GET') {
-    if (isset($_GET['id'])) {
-        $query = "SELECT * FROM sumi_vistamenu WHERE MnuId=".$_GET['id'];
+    if (isset($_GET['rol'])) {
+        $query = "SELECT * FROM sumi_menu16 m JOIN sumi_menuxrol17 x ON m.MnuId = x.MnuId WHERE x.RrlId =".$_GET['rol'];
         $res = methodGet($query);
-        echo json_encode($res->fetch(PDO::FETCH_ASSOC));
-    //  } elseif (condition) {
-   //      # code...
+        echo json_encode($res->fetchAll());
+    } elseif (isset($_GET['id'])) {
+        $query = "SELECT * FROM sumi_menu16 WHERE MnuJerqMen =".$_GET['id'];
+        $res = methodGet($query);
+        echo json_encode($res->fetchAll());
     } else {
-        $query = "SELECT * FROM sumi_vistamenu";
+        $query = "SELECT * FROM sumi_vistamenu WHERE MnuEstMen = 'A'";
         $res = methodGet($query);
         echo json_encode($res->fetchAll());
     }
     header("HTTP/1.1 200 ok");
     exit();
 }
+
 
 // Inserta registros a la base de datos
 if ($_POST['METHOD']=='POST') {
