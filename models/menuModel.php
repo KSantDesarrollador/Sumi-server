@@ -14,8 +14,16 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
         $query = "SELECT * FROM sumi_menu16 WHERE MnuJerqMen =".$_GET['id'];
         $res = methodGet($query);
         echo json_encode($res->fetchAll());
+    } elseif (isset($_GET['jer'])) {
+        $query = "SELECT MnuId, MnuNomMen FROM sumi_menu16 WHERE MnuId =".$_GET['jer'];
+        $res = methodGet($query);
+        echo json_encode($res->fetchAll());
+    } elseif (isset($_GET['sel'])) {
+        $query = "SELECT MnuId, MnuNomMen FROM sumi_menu16 WHERE MnuNivelMen =".$_GET['sel'];
+        $res = methodGet($query);
+        echo json_encode($res->fetchAll());
     } else {
-        $query = "SELECT * FROM sumi_vistamenu WHERE MnuEstMen = 'A'";
+        $query = "SELECT * FROM sumi_menu16 WHERE MnuEstMen = 'A'";
         $res = methodGet($query);
         echo json_encode($res->fetchAll());
     }
