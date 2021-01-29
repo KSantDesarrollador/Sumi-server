@@ -12,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
         $query = "SELECT * FROM sumi_vistausuario WHERE UsrId=".$_GET['id'];
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+    } elseif (isset($_GET['rol'])) {
+        $query = "SELECT RrlId, RrlNomRol FROM sumi_rol21";
+        $res = methodGet($query);
+        echo json_encode($res->fetchAll());
     } else {
         $query = "SELECT * FROM sumi_vistausuario";
         $res = methodGet($query);

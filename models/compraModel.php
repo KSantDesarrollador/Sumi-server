@@ -10,6 +10,14 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
         $query = "SELECT * FROM sumi_vistacompras WHERE CmpId=".$_GET['id'];
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+    } elseif (isset($_GET['prv'])) {
+        $query = "SELECT PvdId, PvdRazSocProv FROM sumi_proveedor19";
+        $res = methodGet($query);
+        echo json_encode($res->fetchAll());
+    } elseif (isset($_GET['udm'])) {
+        $query = "SELECT UmdId, UmdNomUdm FROM sumi_unidadmedica23";
+        $res = methodGet($query);
+        echo json_encode($res->fetchAll());
     } else {
         $query = "SELECT * FROM sumi_vistacompras";
         $res = methodGet($query);

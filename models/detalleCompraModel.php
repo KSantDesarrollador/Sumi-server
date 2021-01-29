@@ -10,6 +10,10 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
         $query = "SELECT * FROM sumi_vistadetallecompra WHERE DocId=".$_GET['id'];
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+    } elseif (isset($_GET['med'])) {
+        $query = "SELECT MdcId, MdcDescMed FROM sumi_productos15";
+        $res = methodGet($query);
+        echo json_encode($res->fetchAll());
     } else {
         $query = "SELECT * FROM sumi_vistadetallecompra";
         $res = methodGet($query);
