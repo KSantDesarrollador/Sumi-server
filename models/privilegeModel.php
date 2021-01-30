@@ -11,13 +11,25 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
     } elseif (isset($_GET['rol'])) {
-        $query = "SELECT RrlId, RrlNomRol FROM sumi_rol21";
-        $res = methodGet($query);
-        echo json_encode($res->fetchAll());
+        if ($_GET['rol']==0) {
+            $query = "SELECT RrlId, RrlNomRol FROM sumi_rol21";
+            $res = methodGet($query);
+            echo json_encode($res->fetchAll());
+        } else {
+            $query = "SELECT RrlNomRol FROM sumi_rol21 WHERE RrlId=".$_GET['rol'];
+            $res = methodGet($query);
+            echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        }
     } elseif (isset($_GET['menu'])) {
-        $query = "SELECT MnuId, MnuNomMen FROM sumi_menu16";
-        $res = methodGet($query);
-        echo json_encode($res->fetchAll());
+        if ($_GET['menu']==0) {
+            $query = "SELECT MnuId, MnuNomMen FROM sumi_menu16 WHERE MnuNivelMen = 0";
+            $res = methodGet($query);
+            echo json_encode($res->fetchAll());
+        } else {
+            $query = "SELECT MnuNomMen FROM sumi_menu16 WHERE MnuId =".$_GET['menu'];
+            $res = methodGet($query);
+            echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        }
     } else {
         $query = "SELECT * FROM sumi_vistaasignaprivilegios";
         $res = methodGet($query);

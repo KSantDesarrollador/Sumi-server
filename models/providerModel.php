@@ -32,7 +32,7 @@ if ($_POST['METHOD']=='POST') {
     $PvdPerContProv = __ChainFilter($_POST['PvdPerContProv']);
     $PvdCarContProv = __ChainFilter($_POST['PvdCarContProv']);
 
-    $query = "INSERT INTO sumi_productos15(PvdTipProv, PvdIdentProv, PvdRazSocProv, PvdTelfProv, 
+    $query = "INSERT INTO sumi_proveedor19(PvdTipProv, PvdIdentProv, PvdRazSocProv, PvdTelfProv, 
         PvdDirProv, PvdEmailProv, PvdPerContProv, PvdCarContProv) 
         VALUES('$PvdTipProv', '$PvdIdentProv', '$PvdRazSocProv', '$PvdTelfProv', '$PvdDirProv', 
         '$PvdEmailProv', '$PvdPerContProv', '$PvdCarContProv')";
@@ -59,7 +59,7 @@ if ($_POST['METHOD']=='PUT') {
     $PvdCarContProv = __ChainFilter($_POST['PvdCarContProv']);
     $PvdEstProv = __ChainFilter($_POST['PvdEstProv']);
     
-    $query = "UPDATE sumi_productos15 SET PvdTipProv = '$PvdTipProv', PvdIdentProv = '$PvdIdentProv',
+    $query = "UPDATE sumi_proveedor19 SET PvdTipProv = '$PvdTipProv', PvdIdentProv = '$PvdIdentProv',
         PvdRazSocProv = '$PvdRazSocProv', PvdTelfProv = '$PvdTelfProv', PvdDirProv = '$PvdDirProv',
         PvdEmailProv = '$PvdEmailProv', PvdPerContProv = '$PvdPerContProv', PvdCarContProv = '$PvdCarContProv',
         PvdEstProv = '$PvdEstProv' WHERE PvdId = '$id'";
@@ -74,7 +74,7 @@ if ($_POST['METHOD']=='PUT') {
 if ($_POST['METHOD']=='DELETE') {
     unset($_POST['METHOD']);
     $id = $_GET['id'];
-    $query = "DELETE FROM sumi_productos15 WHERE PvdId = '$id'";
+    $query = "DELETE FROM sumi_proveedor19 WHERE PvdId = '$id'";
     $res = methodDelete($query);
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
