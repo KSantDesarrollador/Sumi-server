@@ -3,8 +3,7 @@ require "../root/master.php";
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: x-API-KEY, Origin, Authorization,X-Request-With, Content-Type, Accept, Access-Control-Request-Method');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-header('Allow: GET, POST, OPTIONS, PUT, DELETE');
+
 
 // Consulta a la base de datos para traer los datos
 if ($_SERVER['REQUEST_METHOD']=='GET') {
@@ -37,22 +36,14 @@ if ($_POST['METHOD']=='POST') {
     $MdcNivPrescMed = __ChainFilter($_POST['MdcNivPrescMed']);
     $MdcNivAtencMed = __ChainFilter($_POST['MdcNivAtencMed']);
     $MdcViaAdmMed = __ChainFilter($_POST['MdcViaAdmMed']);
+    $MdcFotoMed = __ChainFilter($_POST['MdcFotoMed']);
 
-    if (empty($_FILES['MdcFotoMed']['name'])) {
-        $query = "INSERT INTO sumi_productos15(CtgId, MdcCodMed, MdcDescMed, MdcPresenMed, MdcConcenMed, MdcNivPrescMed, 
-        MdcNivAtencMed, MdcViaAdmMed) VALUES('$CtgId', '$MdcCodMed','$MdcDescMed', '$MdcPresenMed', '$MdcConcenMed', 
-        '$MdcNivPrescMed', '$MdcNivAtencMed', '$MdcViaAdmMed')";
-        $idAutoincrement = "SELECT *, MAX(MdcId) AS MdcId FROM sumi_vistaproductos";
-        $res = methodPost($query, $idAutoincrement);
-    } else {
-        $MdcFotoMed = file_get_contents($_FILES['MdcFotoMed']['name']);
-        $query = "INSERT INTO sumi_productos15(CtgId, MdcCodMed, MdcDescMed, MdcPresenMed, MdcConcenMed, MdcNivPrescMed,
+    $query = "INSERT INTO sumi_productos15(CtgId, MdcCodMed, MdcDescMed, MdcPresenMed, MdcConcenMed, MdcNivPrescMed,
         MdcNivAtencMed, MdcViaAdmMed, MdcFotoMed) 
         VALUES('$CtgId', '$MdcCodMed', '$MdcDescMed', '$MdcPresenMed', '$MdcConcenMed', '$MdcNivPrescMed', '$MdcNivAtencMed',
         '$MdcViaAdmMed' , '$MdcFotoMed')";
-        $idAutoincrement = "SELECT *, MAX(MdcId) AS MdcId FROM sumi_vistaproductos";
-        $res = methodPost($query, $idAutoincrement);
-    }
+    $idAutoincrement = "SELECT *, MAX(MdcId) AS MdcId FROM sumi_productos15";
+    $res = methodPost($query, $idAutoincrement);
 
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
@@ -72,21 +63,14 @@ if ($_POST['METHOD']=='PUT') {
     $MdcNivAtencMed = __ChainFilter($_POST['MdcNivAtencMed']);
     $MdcViaAdmMed = __ChainFilter($_POST['MdcViaAdmMed']);
     $MdcEstMed = __ChainFilter($_POST['MdcEstMed']);
-    
-    if (empty($_FILES['MdcFotoMed']['name'])) {
-        $query = "UPDATE sumi_productos15 SET CtgId = '$CtgId', MdcCodMed = '$MdcCodMed',
-        MdcDescMed = '$MdcDescMed', MdcPresenMed = '$MdcPresenMed', MdcConcenMed = '$MdcConcenMed', 
-        MdcNivPrescMed = '$MdcNivPrescMed', MdcNivAtencMed = '$MdcNivAtencMed', MdcViaAdmMed = '$MdcViaAdmMed',
-        MdcEstMed = '$MdcEstMed' WHERE MdcId = '$id'";
-        $res = methodPut($query);
-    } else {
-        $MdcFotoMed = file_get_contents($_FILES['MdcFotoMed']['name']);
-        $query = "UPDATE sumi_productos15 SET CtgId = '$CtgId', MdcCodMed = '$MdcCodMed',
+    $MdcFotoMed = __ChainFilter($_POST['MdcFotoMed']);
+
+    $query = "UPDATE sumi_productos15 SET CtgId = '$CtgId', MdcCodMed = '$MdcCodMed',
         MdcDescMed = '$MdcDescMed', MdcPresenMed = '$MdcPresenMed', MdcConcenMed = '$MdcConcenMed',
         MdcNivPrescMed = '$MdcNivPrescMed', MdcNivAtencMed = '$MdcNivAtencMed', MdcViaAdmMed = '$MdcViaAdmMed',
         MdcFotoMed = '$MdcFotoMed', MdcEstMed = '$MdcEstMed' WHERE MdcId = '$id'";
-        $res = methodPut($query);
-    }
+    $res = methodPut($query);
+    
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
     exit();

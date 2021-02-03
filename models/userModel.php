@@ -9,7 +9,7 @@ header('Allow: GET, POST, OPTIONS, PUT, DELETE');
 // Consulta a la base de datos para traer los datos
 if ($_SERVER['REQUEST_METHOD']=='GET') {
     if (isset($_GET['id'])) {
-        $query = "SELECT * FROM sumi_vistausuario WHERE UsrId=".$_GET['id'];
+        $query = "SELECT UsrImgUsu FROM sumi_vistausuario WHERE UsrId=".$_GET['id'];
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
     } elseif (isset($_GET['rol'])) {
@@ -34,18 +34,13 @@ if ($_POST['METHOD']=='POST') {
     $UsrContraUsu = __Encripting($_POST['UsrContraUsu']);
     $UsrEmailUsu = __ChainFilter($_POST['UsrEmailUsu']);
     $UsrTelfUsu = __ChainFilter($_POST['UsrTelfUsu']);
-    if (empty($_FILES['UsrImgUsu']['name'])) {
-        $query = "INSERT INTO sumi_usuario24(RrlId, UsrNomUsu, UsrContraUsu, UsrEmailUsu, UsrTelfUsu) 
-        VALUES('$RrlId', '$UsrNomUsu','$UsrContraUsu', '$UsrEmailUsu', '$UsrTelfUsu')";
-        $idAutoincrement = "SELECT *, MAX(UsrId) AS UsrId FROM sumi_vistausuario";
-        $res = methodPost($query, $idAutoincrement);
-    } else {
-        $UsrImgUsu = file_get_contents($_FILES['UsrImgUsu']['name']);
-        $query = "INSERT INTO sumi_usuario24(RrlId, UsrNomUsu, UsrContraUsu, UsrEmailUsu, UsrTelfUsu, UsrImgUsu) 
+    $UsrImgUsu = __ChainFilter($_POST['UsrImgUsu']);
+
+    $query = "INSERT INTO sumi_usuario24(RrlId, UsrNomUsu, UsrContraUsu, UsrEmailUsu, UsrTelfUsu, UsrImgUsu) 
         VALUES('$RrlId', '$UsrNomUsu','$UsrContraUsu', '$UsrEmailUsu', '$UsrTelfUsu', '$UsrImgUsu')";
-        $idAutoincrement = "SELECT *, MAX(UsrId) AS UsrId FROM sumi_vistausuario";
-        $res = methodPost($query, $idAutoincrement);
-    }
+    $idAutoincrement = "SELECT *, MAX(UsrId) AS UsrId FROM sumi_vistausuario";
+    $res = methodPost($query, $idAutoincrement);
+    
 
     echo json_encode($res);
     header("HTTP/1.1 200 ok");
@@ -61,7 +56,8 @@ if ($_POST['METHOD']=='PUT') {
     $UsrEmailUsu = __ChainFilter($_POST['UsrEmailUsu']);
     $UsrTelfUsu = __ChainFilter($_POST['UsrTelfUsu']);
     $UsrEstUsu = __ChainFilter($_POST['UsrEstUsu']);
-    $UsrImgUsu = file_get_contents($_FILES['UsrImgUsu']['name']);
+    $UsrImgUsu = __ChainFilter($_POST['UsrImgUsu']);
+    
     if ($_POST['UsrContraUsu'] == 0) {
         $query = "UPDATE sumi_usuario24 SET RrlId = '$RrlId', UsrNomUsu = '$UsrNomUsu',
         UsrEmailUsu = '$UsrEmailUsu', UsrTelfUsu = '$UsrTelfUsu', UsrImgUsu = '$UsrImgUsu' WHERE UsrId = '$id'";
