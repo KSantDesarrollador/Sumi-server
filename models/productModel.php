@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
     } elseif (isset($_GET['cat'])) {
-        $query = "SELECT CtgId, CtgNomCat FROM sumi_categoria06";
+        $query = "SELECT CtgId, CtgNomCat, CtgColorCat FROM sumi_categoria06";
         $res = methodGet($query);
         echo json_encode($res->fetchAll());
     } else {

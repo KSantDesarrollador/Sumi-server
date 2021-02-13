@@ -11,13 +11,25 @@ if ($_SERVER['REQUEST_METHOD']=='GET') {
         $res = methodGet($query);
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
     } elseif (isset($_GET['med'])) {
-        $query = "SELECT MdcId, MdcDescMed FROM sumi_productos15";
-        $res = methodGet($query);
-        echo json_encode($res->fetchAll());
+        if ($_GET['med']==0) {
+            $query = "SELECT MdcId, MdcDescMed, MdcPresenMed, MdcConcenMed FROM sumi_productos15";
+            $res = methodGet($query);
+            echo json_encode($res->fetchAll());
+        } else {
+            $query = "SELECT MdcDescMed FROM sumi_productos15 WHERE MdcId=".$_GET['med'];
+            $res = methodGet($query);
+            echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        }
     } elseif (isset($_GET['alt'])) {
-        $query = "SELECT AltId, AltNomAle FROM sumi_alerta01";
-        $res = methodGet($query);
-        echo json_encode($res->fetchAll());
+        if ($_GET['alt']==0) {
+            $query = "SELECT AltId, AltNomAle, AltColorAle FROM sumi_alerta01";
+            $res = methodGet($query);
+            echo json_encode($res->fetchAll());
+        } else {
+            $query = "SELECT AltNomAle FROM sumi_alerta01 WHERE AltId =".$_GET['alt'];
+            $res = methodGet($query);
+            echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        }
     } else {
         $query = "SELECT * FROM sumi_vistaparametros";
         $res = methodGet($query);
